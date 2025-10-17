@@ -1,0 +1,184 @@
+{
+  "stundenplan": {
+    "ICT-Fachmann/Frau_25a": {
+      "Montag": [
+        {
+          "stunde": "07:40-11:55",
+          "fach": "BKU",
+          "raum": "LOA909",
+          "lehrer": "HES"
+        },
+        {
+          "stunde": "13:00-14:30",
+          "fach": "Sport",
+          "raum": "TH Linder",
+          "lehrer": "BRJ"
+        },
+        {
+          "stunde": "14:50-17:15",
+          "fach": "ABU",
+          "raum": "LOH209",
+          "lehrer": "SCL"
+        }
+      ],
+      "Dienstag": [
+        {
+          "stunde": "07:40-11:55",
+          "fach": "PU",
+          "raum": "LOH306",
+          "lehrer": "AMS, DIA"
+        },
+        {
+          "stunde": "13:00-14:35",
+          "fach": "Mathe",
+          "raum": "LOH218",
+          "lehrer": "DUP"
+        },
+        {
+          "stunde": "14:50-16:25",
+          "fach": "Englisch",
+          "raum": "LOH218",
+          "lehrer": "STU"
+        }
+      ],
+      "Mittwoch": [
+        {
+          "stunde": "07:40-11:55",
+          "fach": "PU",
+          "raum": "LOH306",
+          "lehrer": "AMS, DIA"
+        },
+        {
+          "stunde": "12:45-17:00",
+          "fach": "PU",
+          "raum": "LOH306",
+          "lehrer": "AMS, DIA"
+        }
+      ],
+      "Donnerstag": [
+        {
+          "stunde": "07:40-11:55",
+          "fach": "BKU",
+          "raum": "LOA909",
+          "lehrer": "HES"
+        },
+        {
+          "stunde": "13:00-17:00",
+          "fach": "PU",
+          "raum": "LOH306",
+          "lehrer": "AMS, DIA"
+        }
+      ],
+      "Freitag": [
+        {
+          "stunde": "07:40-11:55",
+          "fach": "PU",
+          "raum": "LOH306",
+          "lehrer": "AMS, DIA"
+        },
+        {
+          "stunde": "12:45-17:00",
+          "fach": "PU",
+          "raum": "LOH306",
+          "lehrer": "AMS, DIA"
+        }
+      ]     
+    },
+    "Informatiker_25a": {
+      "Montag": [
+        {
+          "stunde": "07:40-09:15",
+          "fach": "Französisch",
+          "raum": "LOH016",
+          "lehrer": "RIV"
+        },
+        {
+          "stunde": "9:30-10:15",
+          "fach": "Mathe",
+          "raum": "LOH109",
+          "lehrer": "DUP"
+        },
+        {
+          "stunde": "10:20-11:55",
+          "fach": "Englisch",
+          "raum": "LOH218",
+          "lehrer": "STU"
+        },
+        {
+          "stunde": "12:45-17:00",
+          "fach": "BKU",
+          "raum": "LOA909",
+          "lehrer": "BRO, LAC, HES"
+        }
+      ],
+      "Dienstag": [
+        {
+          "stunde": "07:40-11:55",
+          "fach": "PU",
+          "raum": "LOA903",
+          "lehrer": "ALO, BRO"
+        },
+        {
+          "stunde": "12:45-17:00",
+          "fach": "PU",
+          "raum": "LOA903",
+          "lehrer": "ALO, BRO"
+        }
+      ],
+      "Mittwoch": [
+        {
+          "stunde": "07:40-11:55",
+          "fach": "PU",
+          "raum": "LOA903",
+          "lehrer": "ALO, BRO"
+        },
+        {
+          "stunde": "12:45-17:00",
+          "fach": "PU",
+          "raum": "LOA903",
+          "lehrer": "ALO, BRO"
+        }
+      ],
+      "Donnerstag": [
+        {
+          "stunde": "07:40-11:55",
+          "fach": "PU",
+          "raum": "LOA903",
+          "lehrer": "ALO, BRO"
+        },
+        {
+          "stunde": "13:00-13:45",
+          "fach": "Mathe",
+          "raum": "LOH107",
+          "lehrer": "DUP"
+        },
+        {
+          "stunde": "13:50-17:15",
+          "fach": "ALExA",
+          "raum": "LOA903",
+          "lehrer": "ALO, BRO, FLR"
+        }
+      ],
+      "Freitag": [
+        {
+          "stunde": "07:40-10:15",
+          "fach": "ABU",
+          "raum": "LOH109",
+          "lehrer": "SCL"
+        },
+        {
+          "stunde": "10:30-12:00",
+          "fach": "Sport",
+          "raum": "TH Linder",
+          "lehrer": "FUJ"
+        },
+        {
+          "stunde": "12:45-17:00",
+          "fach": "BKU",
+          "raum": "LOA909",
+          "lehrer": "BRO, HMA"
+        }
+      ]      
+    }
+  }
+}

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TFPLAN - Stundenplan</title>
+  <link rel="stylesheet" href="stylemain.css"/>
+</head>
+<body class="preload">
+  <header>
+    Klasse: <span id="class-name">Wird geladen...</span>
+  </header>
+
+  <!-- Mobile tabs (bleiben unverändert, nur sichtbar auf small screens) -->
+  <div class="day-tabs">
+    <button data-day="0">Montag</button>
+    <button data-day="1">Dienstag</button>
+    <button data-day="2">Mittwoch</button>
+    <button data-day="3">Donnerstag</button>
+    <button data-day="4">Freitag</button>
+  </div>
+
+  <main>
+    <div class="timetable">
+      <!-- 1. Reihenzeile: Tage. Erste Zelle ist Platzhalter für Zeitspalte -->
+      <div class="days">
+        <div class="day placeholder" aria-hidden="true"></div>
+        <div class="day">Montag</div>
+        <div class="day">Dienstag</div>
+        <div class="day">Mittwoch</div>
+        <div class="day">Donnerstag</div>
+        <div class="day">Freitag</div>
+      </div>
+
+      <!-- 2. Reihe links: Zeiten (JS setzt Positionen/Top) -->
+      <div class="times">
+        <div class="time">07:00</div>
+        <div class="time">08:00</div>
+        <div class="time">09:00</div>
+        <div class="time">10:00</div>
+        <div class="time">11:00</div>
+        <div class="time">12:00</div>
+        <div class="time">13:00</div>
+        <div class="time">14:00</div>
+        <div class="time">15:00</div>
+        <div class="time">16:00</div>
+        <div class="time">17:00</div>
+        <div class="time">18:00</div>
+      </div>
+
+      <!-- 2. Reihe rechts: Fächer (JS füllt .subjects mit .day-column) -->
+      <div class="subjects">
+        <!-- JS erzeugt hier .day-column ... wir legen Platzhalter -->
+        <div class="day-column" id="col-mon"></div>
+        <div class="day-column" id="col-tue"></div>
+        <div class="day-column" id="col-wed"></div>
+        <div class="day-column" id="col-thu"></div>
+        <div class="day-column" id="col-fri"></div>
+      </div>
+    </div>
+  </main>
+  
+  <script src="mainscript.js"></script>
+</body>
+</html>

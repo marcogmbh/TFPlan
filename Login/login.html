@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="stylelogin.css">
+    <title>TFPLAN</title>
+</head>
+<body>
+    <div id="loadingOverlay" aria-hidden="true">
+        <div class="loader">
+          <span class="loading-text">Bitte warten</span>
+          <span class="dots">
+            <span class="dot">.</span>
+            <span class="dot">.</span>
+            <span class="dot">.</span>
+          </span>
+        </div>
+    </div>
+    <div class="login-plate"> 
+        <h1 class="logo">TFPLAN</h1>
+        <div class="login-body">
+            <label for="classInput">Klasse eingeben:</label>
+            <input type="text" id="classSearch" placeholder="z.B. ICT-Fachmann 25a" list="klassenListe">
+            <datalist id="klassenListe"></datalist>
+            <button id="selectClass">Suchen</button>
+        </div>
+    </div>
+    <script src="loginscript.js"></script>
+</body>
+</html>
+
