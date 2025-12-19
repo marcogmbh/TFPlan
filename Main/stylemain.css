@@ -1,81 +1,223 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
 
-:root{
+/* =========================================
+   1. VARIABLEN DEFINITION
+   ========================================= */
+:root {
   --slot-gap: 12px;
   --time-col: 50px;
   --grid-gap: 14px;
   --grid-max: 1200px;
+
+  /* --- ALLGEMEINE FARBEN (LIGHT MODE) --- */
+  --bg-body: #f8f9fc;
+  --text-color: #333;
+  --bg-card: #ECEFF1;      /* Standard Fach-Hintergrund */
+  --text-card: #263238;    /* Standard Fach-Text */
+  --bg-dropdown: #ffffff;
+  --shadow-color: rgba(0,0,0,0.1);
+  --header-bg-start: #3b3b98;
+  --header-bg-end: #575fcf;
+  --bg-day-header: #eef1fb; /* Hintergrund der Wochentage oben */
+  --text-day-header: #333;
+
+  /* --- SPEZIFISCHE FÄCHER-FARBEN (LIGHT MODE) --- */
+  /* BKU (Cyan) */
+  --bg-bku: #E0F7FA; --text-bku: #006064;
+  /* Sport (Grün) */
+  --bg-sport: #E8F5E9; --text-sport: #1B5E20;
+  /* ABU (Orange) */
+  --bg-abu: #FFF3E0; --text-abu: #E65100;
+  /* PU (Lila) */
+  --bg-pu: #F3E5F5; --text-pu: #4A148C;
+  /* Mathe (Blau) */
+  --bg-mathe: #E3F2FD; --text-mathe: #0D47A1;
+  /* Englisch (Rot-Orange) */
+  --bg-englisch: #FBE9E7; --text-englisch: #BF360C;
+  /* Französisch (Gelb-Orange) */
+  --bg-franz: #FFFDE7; --text-franz: #F57F17;
+  /* ALExA (Rot) */
+  --bg-alexa: #FFEBEE; --text-alexa: #B71C1C;
 }
 
-/* Basis */
-body{ margin:0; font-family:'Inter',sans-serif; background:#f8f9fc; color:#333; }
-header{ background:linear-gradient(90deg,#3b3b98,#575fcf); color:#fff; padding:1rem; font-size:1.3rem; font-weight:600; box-shadow:0 2px 6px rgba(0,0,0,.1); }
-main{ padding:1rem; overflow-x:auto; }
+body.dark-mode {
+  /* --- ALLGEMEINE FARBEN (DARK MODE) --- */
+  --bg-body: #121212;
+  --text-color: #e0e0e0;
+  --bg-card: #263238;       /* Dunklerer Standard-Hintergrund */
+  --text-card: #eceff1;     /* Hellerer Standard-Text */
+  --bg-dropdown: #2c2c2c;
+  --shadow-color: rgba(0,0,0,0.5);
+  --header-bg-start: #1a1a40;
+  --header-bg-end: #2a2a60;
+  --bg-day-header: #2c2c2c; /* Dunkle Wochentage */
+  --text-day-header: #e0e0e0;
 
-/* ========== TIMETABLE: EIN GEMEINSAMES GRID ========== */
-.timetable{
+  /* --- SPEZIFISCHE FÄCHER-FARBEN (DARK MODE - NEU!) --- */
+  /* Wir drehen die Logik um: Dunkler Hintergrund, heller Text für Kontrast */
+  
+  /* BKU (Dunkel-Cyan BG, Helles Cyan Text) */
+  --bg-bku: #004D40; --text-bku: #E0F7FA;
+  /* Sport (Dunkel-Grün BG, Helles Grün Text) */
+  --bg-sport: #1B5E20; --text-sport: #E8F5E9;
+  /* ABU (Dunkel-Orange BG, Helles Orange Text) */
+  --bg-abu: #BF360C; --text-abu: #FFF3E0;
+  /* PU (Dunkel-Lila BG, Helles Lila Text) */
+  --bg-pu: #4A148C; --text-pu: #F3E5F5;
+  /* Mathe (Dunkel-Blau BG, Helles Blau Text) */
+  --bg-mathe: #0D47A1; --text-mathe: #E3F2FD;
+  /* Englisch (Dunkel-Rot BG, Helles Rot Text) */
+  --bg-englisch: #B71C1C; --text-englisch: #FBE9E7;
+  /* Französisch (Dunkel-Gelb BG, Helles Gelb Text) */
+  --bg-franz: #F57F17; --text-franz: #FFFDE7;
+  /* ALExA (Tiefrot BG, Helles Rot Text) */
+  --bg-alexa: #880E4F; --text-alexa: #FFEBEE;
+}
+
+/* =========================================
+   2. BASIS LAYOUT
+   ========================================= */
+body { 
+  margin: 0; 
+  font-family: 'Inter', sans-serif; 
+  background: var(--bg-body); 
+  color: var(--text-color);
+  transition: background 0.3s, color 0.3s;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+header { 
+  flex-shrink: 0;
+  background: linear-gradient(90deg, var(--header-bg-start), var(--header-bg-end)); 
+  color: #fff; 
+  padding: 1rem 50px;
+  font-size: 1.3rem; 
+  font-weight: 600; 
+  box-shadow: 0 2px 6px rgba(0,0,0,.1);
+  position: relative;   
+  text-align: center;   
+  box-sizing: border-box;
+  transition: background 0.3s;
+}
+
+main {
+  display: block; 
+  flex-grow: 1; 
+  padding: 1rem;
+  overflow-x: hidden; 
+  width: 100%;
+  box-sizing: border-box;
+}
+@media (min-width: 901px) {
+  main {
+    display: flex; /* Flexbox aktivieren nur für Desktop */
+    justify-content: center; /* Horizontal zentrieren */
+    align-items: flex-start; 
+    padding-top: 2rem; 
+  }
+}
+
+/* =========================================
+   3. TIMETABLE GRID
+   ========================================= */
+.timetable {
   display: grid;
-  grid-template-columns: var(--time-col) repeat(5, 1fr); /* Zeitspalte + 5 Tage */
-  grid-template-rows: auto 1fr; /* erste Reihe: Tage, zweite: times+subjects */
+  grid-template-columns: var(--time-col) repeat(5, 1fr);
+  grid-template-rows: auto 1fr;
   gap: var(--grid-gap);
+  width: 100%;
   max-width: var(--grid-max);
   margin: 0 auto;
   box-sizing: border-box;
 }
 
-/* Tage (erste Reihe) - BELEGUNG: gesamte Breite, intern gleiche Spalten */
-.days{
-  grid-column: 1 / -1; /* ganz oben, über alle Spalten */
+/* Tage (erste Reihe) */
+.days {
+  grid-column: 1 / -1; 
   display: grid;
-  grid-template-columns: var(--time-col) repeat(5, 1fr); /* exakt dieselbe Spaltenaufteilung */
+  grid-template-columns: var(--time-col) repeat(5, 1fr);
   gap: var(--grid-gap);
   align-items: center;
 }
 
-/* Platzhalter (erste Zelle) unsichtbar halten */
-.days .placeholder{
-  visibility: hidden;
-  height: 0;
-  padding: 0;
-  margin: 0;
+.days .placeholder {
+  visibility: hidden; height: 0; padding: 0; margin: 0;
 }
 
-/* Styling der Day-Boxen */
-.days .day{
-  font-weight:600;
-  text-align:center;
-  padding:8px 6px;
-  background:#eef1fb;
-  border-radius:10px;
-  box-shadow:0 1px 3px rgba(0,0,0,.05);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  box-sizing:border-box;
+.days .day {
+  font-weight: 600;
+  text-align: center;
+  padding: 8px 6px;
+  background-color: var(--bg-day-header);
+  color: var(--text-day-header);
+  border-radius: 10px;
+  box-shadow: 0 1px 3px rgba(0,0,0,.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  transition: background 0.3s, color 0.3s;
 }
 
-/* Zeitspalte - links, zweite Reihe */
-.times{
+/* Zeitspalte */
+.times {
   grid-column: 1 / 2;
   grid-row: 2 / 3;
   position: relative;
-  padding-left: 8px;
+  border-right: 1px solid rgba(0,0,0,0.05); 
+  background: linear-gradient(to right, transparent, rgba(0,0,0,0.02)); 
 }
-.time{
-  border-top: none !important; 
-  font-size:12px;
-  color:#333;
-  position:absolute; /* JS positioniert mittels top/height */
-  width:100%;
+.time {
+  position: absolute;
+  width: 100%;
+  transform: translateY(-50%);
+  height: 0; 
+  display: flex;
+  align-items: center;
+  justify-content: flex-end; 
+  padding-right: 10px;    
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 700;        
+  color: var(--text-color);
+  opacity: 0.7;
+  z-index: 10;             
 }
 
-/* JSON-Zeiten unsichtbar */
-.special-line {
-  display: none !important;
+/* Wir nutzen ::before für den Text-Hintergrund (Bubble-Effekt) */
+.time::before {
+  content: attr(data-time); /* Optional, falls wir Attribut hätten. Hier nur Deko. */
+  /* Da wir den Text nicht doppeln wollen, stylen wir .time selbst als Bubble wäre schwierig wegen width:100%.
+     Deshalb machen wir es schlicht und elegant nur über Text. */
 }
-/* Subjects - rechte Fläche, zweite Reihe; intern 5 Spalten */
-.subjects{
-  grid-column: 2 / -1; /* von Spalte 2 bis Ende (die 5 Tage) */
+
+/* Alternative: Wir lassen die Linie durch ::after laufen */
+.time::after {
+  content: "";
+  position: absolute;
+  right: 0; /* Startet an der rechten Kante der Zeitspalte */
+  width: 6px; /* Kleiner "Tick-Mark" Strich */
+  height: 1px;
+  background-color: var(--text-color);
+  opacity: 0.3;
+}
+
+/* =========================================
+   DARK MODE ANPASSUNG FÜR ZEITEN
+   ========================================= */
+body.dark-mode .times {
+  border-right: 1px solid rgba(255,255,255,0.1);
+  background: linear-gradient(to right, transparent, rgba(255,255,255,0.02));
+}
+
+.special-line { display: none !important; }
+
+/* Subjects Bereich */
+.subjects {
+  grid-column: 2 / -1;
   grid-row: 2 / 3;
   display: grid;
   grid-template-columns: repeat(5, 1fr);
@@ -83,127 +225,424 @@ main{ padding:1rem; overflow-x:auto; }
   align-items: start;
 }
 
-/* jedes day-column bleibt eine Zelle im subjects-Grid */
-.day-column{
+.day-column {
   position: relative;
   min-width: 0;
 }
 
-/* Boxen absolut innerhalb der Spalte, aber MITTLIG ausgerichtet */
-.day-column .subject{
+/* Fach-Boxen Basis-Styling */
+.day-column .subject {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  width: calc(100% - 12px); /* minimaler Innenabstand */
+  width: calc(100% - 12px);
   box-sizing: border-box;
 }
 
-/* Box-Look */
-.subject{
-  background:#fff;
-  border-radius:12px;
-  padding:10px;
-  box-shadow:0 6px 18px rgba(12,24,40,0.06);
-  font-size:13px;
-  display:flex;
-  flex-direction:column;
-  justify-content:flex-start;
-  overflow:hidden;
-  transition: transform .12s ease, box-shadow .12s ease;
-}
-.subject:hover{ transform: translateY(-4px); box-shadow:0 12px 36px rgba(12,24,40,0.10); }
-.subject-title{ font-weight:700; margin-bottom:6px; }
-.subject-time{ font-size:12px; color:#666; margin-bottom:6px; }
-.subject-room, .subject-teacher{ font-size:12px; color:#555; }
-
-/* Mobile tabs (wie vorher) */
-.day-tabs{ display:none; justify-content:space-around; background:#fff; padding:8px; border-bottom:1px solid #ddd; }
-.day-tabs button{ background:#f0f0f5; border:none; padding:6px 12px; border-radius:8px; font-size:14px; cursor:pointer; }
-.day-tabs button.active{ background:#4a4de7; color:#fff; }
-
-
 .subject {
+  /* Standardfarben über Variablen */
+  background-color: var(--bg-card);
+  color: var(--text-card);
+  border-radius: 12px;
+  padding: 10px;
+  box-shadow: 0 6px 18px rgba(12,24,40,0.06);
+  font-size: 13px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  overflow: hidden;
   cursor: pointer;
-  /* Füge height zur Transition hinzu für einen sanften Übergang */
-  transition: transform .2s ease, box-shadow .2s ease, height .2s ease, padding .2s ease, z-index 0s; 
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.3s;
+  z-index: 1;
 }
 
-/* Zustand der VERGRÖSSERUNG bei Klick für Lesbarkeit */
+.subject:hover { transform: translateX(-50%) translateY(-2px); box-shadow: 0 8px 20px rgba(12,24,40,0.15); z-index: 50;}
+.subject-title { font-weight: 700; margin-bottom: 6px; }
+.subject-time { font-size: 12px; opacity: 0.8; margin-bottom: 6px; }
+.subject-room, .subject-teacher { font-size: 12px; opacity: 0.9; }
+
+/* Vergrösserter Zustand */
 .subject.enlarged {
-  /* Z-Index: Bringt das Element über alle anderen Fächer, damit es sichtbar ist */
   z-index: 100; 
-  
-  /* Höhe: Setzt die Höhe auf einen Wert, der garantiert, dass der Inhalt passt */
-  /* Da die Box 4 Zeilen enthält, sind 100px vertikale Höhe gut geeignet. */
-  height: 100px !important; 
-  
-  /* Reset: Wir wollen keine Skalierung, nur Zentrierung beibehalten */
+  min-height: 150px; 
+  height: auto !important; 
   transform: translateX(-50%); 
-  
-  /* WICHTIG: Erlaubt, dass der Text über die ursprüngliche, kleine Box hinausragt */
   overflow: visible; 
-  
-  /* Schatten und Padding für besseren Hervorhebungs-Effekt */
-  box-shadow: 0 10px 30px rgba(12, 24, 40, 0.4);
-  padding: 15px 10px; 
-}
-
-/* Optional: Inhalt beim Vergrössern etwas grösser darstellen */
-.subject.enlarged .subject-title { font-size: 1.2rem; }
-.subject.enlarged .subject-room, 
-.subject.enlarged .subject-teacher, 
-.subject.enlarged .subject-time { font-size: 14px; }
-
-/* Stelle sicher, dass der normale Hover-Effekt im vergrösserten Zustand deaktiviert wird */
-.subject.enlarged:hover {
-  transform: translateX(-50%); /* Entfernt den translateY(-4px) Teil */
-  box-shadow: 0 10px 30px rgba(12, 24, 40, 0.4); /* Behält den grösseren Schatten */
-}
-
-.subject.enlarged {
-  /* Z-Index: Bringt das Element über alle anderen Fächer, damit es sichtbar ist */
-  z-index: 100; 
-  
-  /* HÖHE: Länglicher Zustand (auf 150px erhöht) */
-  height: 150px !important; 
-  
-  /* Reset: Behält die horizontale Zentrierung bei */
-  transform: translateX(-50%); 
-  
-  /* Schatten und Padding */
-  box-shadow: 0 10px 30px rgba(12, 24, 40, 0.4);
-  padding: 20px 15px; /* Noch mehr Padding für Luft */
-
-  /* ZENTRIERUNG: Text in der länglichen Box zentrieren */
+  box-shadow: 0 10px 30px var(--shadow-color);
+  padding: 20px 15px; 
   justify-content: space-around;
 }
+.subject.enlarged .subject-title { font-size: 1.6rem; margin-bottom: 10px; }
+.subject.enlarged .subject-time { font-size: 1.0rem; }
+.subject.enlarged .subject-room, .subject.enlarged .subject-teacher { font-size: 1.1rem; }
+.subject.enlarged:hover { transform: translateX(-50%); box-shadow: 0 10px 30px var(--shadow-color); }
 
-/* Optional: Inhalt beim Vergrössern deutlich grösser darstellen */
-.subject.enlarged .subject-title { 
-  font-size: 1.6rem; /* Titel deutlich vergrössern */
-  margin-bottom: 10px;
-}
-.subject.enlarged .subject-time {
-  font-size: 1.0rem; /* Uhrzeit */
-}
-.subject.enlarged .subject-room, 
-.subject.enlarged .subject-teacher { 
-  font-size: 1.1rem; /* Raum und Lehrer */
+/* =========================================
+   4. SPEZIFISCHE FÄCHER-FARBEN (OBERRIDES)
+   ========================================= */
+/* HIER IST DIE ÄNDERUNG: Wir nutzen jetzt Variablen statt fester Hex-Codes */
+
+.subject.fach-bku { background-color: var(--bg-bku); color: var(--text-bku); }
+.subject.fach-sport { background-color: var(--bg-sport); color: var(--text-sport); }
+.subject.fach-abu { background-color: var(--bg-abu); color: var(--text-abu); }
+.subject.fach-pu { background-color: var(--bg-pu); color: var(--text-pu); }
+.subject.fach-mathe { background-color: var(--bg-mathe); color: var(--text-mathe); }
+.subject.fach-englisch { background-color: var(--bg-englisch); color: var(--text-englisch); }
+.subject.fach-franzosisch { background-color: var(--bg-franz); color: var(--text-franz); }
+.subject.fach-alexa { background-color: var(--bg-alexa); color: var(--text-alexa); }
+
+
+/* =========================================
+   5. RESPONSIVE / MOBILE
+   ========================================= */
+.day-tabs { display: none; justify-content: space-around; background: var(--bg-card); padding: 8px; border-bottom: 1px solid var(--shadow-color); }
+.day-tabs button { background: var(--bg-body); border: none; padding: 6px 12px; border-radius: 8px; font-size: 14px; cursor: pointer; color: var(--text-color); transition: background 0.3s, color 0.3s;}
+.day-tabs button.active { background: var(--header-bg-end); color: #fff; }
+
+@media (max-width: 900px) {
+  
+  /* 1. Hauptcontainer */
+  main {
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+    justify-content: flex-start; /* Startet oben */
+    
+    overflow-x: hidden;
+    padding: 10px 1rem; /* Etwas Padding oben/unten */
+    min-height: auto;
+  }
+
+  /* 2. Wochenkontrollen */
+  .week-controls {
+    margin-top: 0;
+    margin-bottom: 10px;
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* 3. Tabs: Jetzt unter der Woche */
+  .day-tabs { 
+    display: flex; 
+    justify-content: space-between; /* Buttons schön verteilen */
+    width: 100%; 
+    max-width: 450px; 
+    margin: 0 auto 15px auto; /* Abstand nach unten zum Plan */
+    gap: 5px;
+    background: transparent;
+    border: none;
+    padding: 0;
+  }
+  
+  .day-tabs button {
+    background: var(--bg-card);
+    border-radius: 6px;
+    padding: 8px 5px; /* Etwas grössere Klickfläche */
+    flex-grow: 1; /* Buttons nehmen verfügbaren Platz */
+    font-size: 13px;
+    text-align: center;
+  }
+  
+  .days { 
+    display: none; 
+  }
+
+  /* 4. Timetable: Das 2-Spalten Grid */
+  .timetable {
+    display: grid;
+    /* Spalte 1: Zeit (50px), Spalte 2: Fach (Rest) */
+    grid-template-columns: var(--time-col) 1fr;
+    grid-template-rows: 1fr; /* Nur eine Zeile, JS füllt die Höhe */
+    gap: 0; /* Kein Gap hier, damit Ausrichtung exakt ist */
+    width: 100%;
+    max-width: 450px; 
+    margin: 0 auto;
+    padding-top: 0;
+    position: relative;
+  }
+
+  /* 5. Linke Spalte: Zeiten */
+  .times {
+    display: block; 
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+    padding: 0;
+    margin: 0;
+    /* Hintergrund leicht sichtbar machen zur Orientierung */
+    border-right: 1px solid rgba(0,0,0,0.05); 
+  }
+  
+  .time {
+    font-size: 10px; 
+    text-align: right;
+    padding-right: 8px;
+    /* Vertikale Zentrierung der Zeit zum Strich */
+    transform: translateY(-50%);
+  }
+
+  /* 6. Rechte Spalte: Fächer */
+  .subjects {
+    display: block;
+    grid-column: 2 / 3;
+    grid-row: 1 / 2;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    position: relative; /* Wichtig für absolute Positionierung der Kinder */
+  }
+
+  /* 7. Tagesspalten */
+  .day-column { 
+    display: none; 
+    position: absolute; /* Muss absolut sein, damit es deckungsgleich mit .subjects ist */
+    top: 0; 
+    left: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  .day-column.active { 
+    display: block;
+  }
+  
+  /* 8. Fächerboxen */
+  .day-column .subject {
+      width: calc(100% - 10px); /* Etwas Platz rechts lassen */
+      left: 5px; /* Kleiner Abstand zur Zeitlinie */
+      transform: none; /* Reset Desktop Transform */
+  }
+
+  /* Vergrössertes Fach auf Handy */
+  .subject.enlarged {
+    width: 90vw !important; /* Fast ganzer Bildschirm */
+    left: 50% !important;
+    transform: translateX(-50%) translateY(0) !important;
+    max-width: 350px;
+  }
 }
 
-/* Stelle sicher, dass der Hover-Effekt im vergrösserten Zustand deaktiviert wird */
-.subject.enlarged:hover {
-  transform: translateX(-50%);
-  box-shadow: 0 10px 30px rgba(12, 24, 40, 0.4);
+@media (min-width: 1100px) { :root { --grid-max: 1100px; } }
+
+/* =========================================
+   6. NAVIGATION ELEMENTS (Zurück & Menü)
+   ========================================= */
+/* Zurück-Button */
+.back-to-login {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: white;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  transition: background-color 0.2s ease;
+}
+.back-to-login:hover { background-color: rgba(255, 255, 255, 0.2); }
+.back-to-login svg { width: 28px; height: 28px; fill: white; }
+
+/* Menü & Dropdown (Rechts) */
+.menu-container {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
-/* Mobile behavior */
-@media (max-width:900px){
-  .day-tabs{ display:flex; }
-  .days{ display:none; } /* Desktop-Tage ausblenden auf Mobile */
-  .day-column{ display:none; width:100%; max-width:420px; margin:0 auto; }
-  .day-column.active{ display:block; }
+#menu-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  border-radius: 50%;
+  transition: background 0.2s;
+}
+#menu-btn:hover { background: rgba(255,255,255,0.2); }
+
+.dropdown-menu {
+  display: none; 
+  position: absolute;
+  right: 0;
+  top: 50px;
+  background: var(--bg-dropdown);
+  color: var(--text-color);
+  box-shadow: 0 4px 12px var(--shadow-color);
+  border-radius: 8px;
+  padding: 10px;
+  min-width: 150px;
+  z-index: 2000;
+}
+.dropdown-menu.show { display: block; }
+
+#dark-mode-toggle {
+  background: none;
+  border: none;
+  color: var(--text-color);
+  font-size: 16px;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  padding: 8px;
+  border-radius: 4px;
+}
+#dark-mode-toggle:hover { 
+    background-color: var(--shadow-color);
+}
+@media (min-width: 901px) {
+  main {
+    /* Macht den Main-Bereich zum Flex-Container */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Zentriert horizontal */
+    
+    /* Optional: Wenn du es auch vertikal mittig haben willst:
+       min-height: 80vh;
+       justify-content: center; 
+    */
+  }
+  
+  .timetable {
+    /* Sicherstellen, dass der Plan nicht breiter als erlaubt wird */
+    width: 100%; 
+    margin: 0 auto;
+  }
+}
+/* =========================================
+   WOCHEN-NAVIGATION
+   ========================================= */
+   
+.week-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 0;
+  margin-bottom: 15px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-color);
 }
 
-/* kleinere Utility */
-@media (min-width:1100px){ :root{ --grid-max:1100px; } }
+.week-controls button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--header-bg-start); /* Blaue Farbe verwenden */
+    padding: 5px 10px;
+    transition: color 0.2s;
+    display: flex; /* Zentriert das SVG */
+}
+
+.week-controls button:hover {
+    color: #3b3b98; /* Dunklere Farbe beim Hovern */
+}
+
+#week-range {
+    margin: 0 15px;
+    text-align: center;
+    min-width: 130px; /* Stellt sicher, dass das Datum Platz hat */
+}
+
+/* Dark Mode Anpassung */
+body.dark-mode .week-controls button {
+    color: #9fa4e2; /* Hellere Farbe für Dark Mode */
+}
+body.dark-mode .week-controls button:hover {
+    color: #c9cce5;
+}
+
+.week-display {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-color);
+  min-width: 200px; /* Verhindert Springen beim Textwechsel */
+  text-align: center;
+}
+
+/* Aktualisierung für Tab-Namen auf Handy */
+.day-tabs button span.date-small {
+  display: block;
+  font-size: 0.75em;
+  opacity: 0.8;
+  font-weight: 400;
+}
+.days .day {
+  /* Erlaubt uns, die Flex-Richtung zu steuern, falls nötig */
+  flex-direction: column; 
+  line-height: 1.2; /* Zeilenabstand im Titel normalisieren */
+}
+
+/* Das Datum (wird als <small> im JS eingefügt) */
+.days .day small {
+  display: block;       /* Macht es zur eigenen Zeile */
+  margin-top: 6px;      /* Hier ist der Abstand, den du wolltest */
+  font-size: 0.85em;    /* Schriftgrösse */
+  opacity: 0.7;         /* Etwas blasser für die Hierarchie */
+  font-weight: 400;     /* Dünnere Schrift */
+}
+/* =========================================
+   3. MARKIERUNG AKTIVER TAG (FINALE KORREKTUR)
+   ========================================= */
+
+/* NEU: Styling für den HEUTIGEN Tag (ROTE Markierung) */
+.days .day.is-today {
+  background-color: #ff00009e !important; /* Das !important erzwingt ROT */
+  color: var(--text-color) !important; 
+  font-weight: 700;
+  box-shadow: none; 
+  border-radius: 4px 4px 0 0; 
+}
+
+.day-tabs button.is-today {
+  background-color: #ff000070 !important; 
+  color: var(--text-color) !important; 
+  font-weight: 700;
+  box-shadow: none !important; 
+  transform: translateY(0) !important; 
+}
+
+/* Dark Mode Anpassung für HEUTE */
+body.dark-mode .days .day.is-today,
+body.dark-mode .days .day.active-day.is-today {
+    background-color: #ff0000b8 !important;
+    color: var(--bg-body) !important;
+    box-shadow: none !important;
+}
+
+.days .day.active-day.is-today {
+  background-color: #F49890 !important; /* Rot gewinnt immer */
+  color: var(--text-color) !important;
+}
+
+/* Selection-Markierung im Desktop-Header */
+.days .day.active-day {
+  background-color: var(--bg-day-header); 
+  color: var(--text-day-header);
+  font-weight: 600;
+  box-shadow: 0 1px 3px rgba(0,0,0,.05);
+}
+/* Selection-Markierung für den Mobilen Tab */
+.day-tabs button.active {
+  background: var(--bg-body) !important;
+  color: var(--header-bg-start) !important; 
+  font-weight: 700;
+  box-shadow: 0 1px 3px rgba(0,0,0,.1) !important;
+  transform: translateY(0) !important;
+}
+
+/* WICHTIG: Wenn ein Tab beides ist (Selected UND Today), soll ROT gewinnen */
+.day-tabs button.active.is-today {
+    background-color: #F49890 !important; 
+    color: var(--text-color) !important;
+    font-weight: 700;
+}
+body.dark-mode .day-tabs button.active.is-today {
+    background-color: #D32F2F !important;
+    color: var(--bg-body) !important;
+}

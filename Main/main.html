@@ -8,19 +8,49 @@
 </head>
 <body class="preload">
   <header>
+    <a href="../Login/login.html" class="back-to-login" title="Zurück zur Klassenauswahl">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M10.8284 12L15.7782 17.0355L14.2218 18.5907L8 12.1956L14.2218 5.80058L15.7782 7.35579L10.8284 12Z"></path>
+      </svg>
+    </a>
     Klasse: <span id="class-name">Wird geladen...</span>
+    <div class="menu-container">
+      <button id="menu-btn" aria-label="Menü öffnen">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
+          <path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/>
+        </svg>
+      </button>
+      <div id="dropdown-menu" class="dropdown-menu">
+        <button id="dark-mode-toggle">🌙 Dark Mode</button>
+      </div>
+    </div>
   </header>
 
   <!-- Mobile tabs (bleiben unverändert, nur sichtbar auf small screens) -->
-  <div class="day-tabs">
-    <button data-day="0">Montag</button>
-    <button data-day="1">Dienstag</button>
-    <button data-day="2">Mittwoch</button>
-    <button data-day="3">Donnerstag</button>
-    <button data-day="4">Freitag</button>
-  </div>
-
   <main>
+    <div class="week-controls">
+      <button id="prev-week" aria-label="Vorherige Woche">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+      </button>
+     
+      <div class="week-display">
+        <span id="week-range">Lade Datum...</span>
+      </div>
+      
+      <button id="next-week" aria-label="Nächste Woche">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+      </button>
+    </div>
+
+    <div class="day-tabs">
+      <button data-day="0">Montag</button>
+      <button data-day="1">Dienstag</button>
+      <button data-day="2">Mittwoch</button>
+      <button data-day="3">Donnerstag</button>
+      <button data-day="4">Freitag</button>
+    </div>  
+
+
     <div class="timetable">
       <!-- 1. Reihenzeile: Tage. Erste Zelle ist Platzhalter für Zeitspalte -->
       <div class="days">
