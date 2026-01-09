@@ -263,18 +263,42 @@ body.dark-mode .times {
 
 /* Vergrösserter Zustand */
 .subject.enlarged {
-  z-index: 100; 
-  min-height: 150px; 
-  height: auto !important; 
-  transform: translateX(-50%); 
-  overflow: visible; 
-  box-shadow: 0 10px 30px var(--shadow-color);
-  padding: 20px 15px; 
-  justify-content: space-around;
+  /* 1. Aus dem Grid lösen und fixieren */
+  position: fixed !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important; /* Exakte Mitte */
+  
+  /* 2. Grösse definieren */
+  width: 90% !important;      /* Handy: fast volle Breite */
+  max-width: 500px !important; /* Desktop: nicht breiter als 500px */
+  height: auto !important;    /* Höhe passt sich Inhalt an */
+  min-height: 250px;          /* Mindesthöhe für schöneren Look */
+  
+  /* 3. Optik & Overlay (Schatten verdunkelt den Hintergrund) */
+  z-index: 10000 !important;  /* Ganz oben liegen */
+  box-shadow: 0 0 0 100vmax rgba(0,0,0,0.6), 0 20px 50px rgba(0,0,0,0.5) !important;
+  cursor: default;            /* Zeigt an, dass es ein Info-Fenster ist */
+  
+  /* 4. Inhalt schön anordnen */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;    /* Inhalt vertikal mittig im Popup */
+  padding: 30px !important;   /* Mehr Innenabstand */
+  
+  /* Optional: Animation beim Öffnen */
+  animation: popupFadeIn 0.2s ease-out forwards;
 }
-.subject.enlarged .subject-title { font-size: 1.6rem; margin-bottom: 10px; }
-.subject.enlarged .subject-time { font-size: 1.0rem; }
-.subject.enlarged .subject-room, .subject.enlarged .subject-teacher { font-size: 1.1rem; }
+
+@keyframes popupFadeIn {
+  from { opacity: 0; transform: translate(-50%, -45%); }
+  to { opacity: 1; transform: translate(-50%, -50%); }
+}
+
+.subject.enlarged .subject-title { font-size: 1.8rem; margin-bottom: 15px; border-bottom: 1px solid rgba(0,0,0,0.1); padding-bottom: 10px; }
+.subject.enlarged .subject-time { font-size: 1.2rem; margin-bottom: 5px; }
+.subject.enlarged .subject-room, 
+.subject.enlarged .subject-teacher { font-size: 1.1rem; opacity: 1; }
 .subject.enlarged:hover { transform: translateX(-50%); box-shadow: 0 10px 30px var(--shadow-color); }
 
 /* =========================================
@@ -415,10 +439,20 @@ body.dark-mode .times {
 
   /* Vergrössertes Fach auf Handy */
   .subject.enlarged {
-    width: 90vw !important; /* Fast ganzer Bildschirm */
-    left: 50% !important;
-    transform: translateX(-50%) translateY(0) !important;
+    position: fixed !important;    /* Fixiert am Bildschirm, nicht im Grid scrollen */
+    top: 50% !important;           /* Vertikal zentriert */
+    left: 50% !important;          /* Horizontal zentriert */
+    transform: translate(-50%, -50%) !important; /* Exakte Mitte */
+    
+    width: 85vw !important;        /* 85% der Bildschirmbreite */
     max-width: 350px;
+    height: auto !important;
+    min-height: 200px;             /* Mindesthöhe damit Inhalt Platz hat */
+    
+    z-index: 9999 !important;      /* Über alles andere legen */
+    
+    /* Ein starker Schatten, der den Hintergrund abdunkelt */
+    box-shadow: 0 0 0 1000px rgba(0,0,0,0.7), 0 10px 30px rgba(0,0,0,0.5) !important;
   }
 }
 
@@ -591,13 +625,6 @@ body.dark-mode .week-controls button:hover {
    ========================================= */
 
 /* NEU: Styling für den HEUTIGEN Tag (ROTE Markierung) */
-.days .day.is-today {
-  background-color: #ff00009e !important; /* Das !important erzwingt ROT */
-  color: var(--text-color) !important; 
-  font-weight: 700;
-  box-shadow: none; 
-  border-radius: 4px 4px 0 0; 
-}
 
 .day-tabs button.is-today {
   background-color: #ff000070 !important; 
@@ -605,6 +632,7 @@ body.dark-mode .week-controls button:hover {
   font-weight: 700;
   box-shadow: none !important; 
   transform: translateY(0) !important; 
+  border-radius: 10px !important;
 }
 
 /* Dark Mode Anpassung für HEUTE */
@@ -645,4 +673,13 @@ body.dark-mode .days .day.active-day.is-today {
 body.dark-mode .day-tabs button.active.is-today {
     background-color: #D32F2F !important;
     color: var(--bg-body) !important;
+}
+
+/* FIX 1: Lesbarkeit des aktiven Tabs im Dark Mode */
+@media (max-width: 900px) {
+  body.dark-mode .day-tabs button.active {
+    background-color: var(--bg-card) !important; /* Hellerer Hintergrund als Body */
+    color: #ffffff !important;                   /* Weisse Schrift statt Dunkelblau */
+    border: 1px solid var(--header-bg-end);      /* Optional: Rand zur Hervorhebung */
+  }
 }
