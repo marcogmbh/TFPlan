@@ -63,7 +63,7 @@
           "lehrer": "HES"
         },
         {
-          "stunde": "13:00-17:00",
+          "stunde": "12:45-17:00",
           "fach": "PU",
           "raum": "LOH306",
           "lehrer": "AMS, DIA"
@@ -182,3 +182,4 @@
     }
   }
 }
+
