@@ -12,31 +12,23 @@
   /* --- ALLGEMEINE FARBEN (LIGHT MODE) --- */
   --bg-body: #f8f9fc;
   --text-color: #333;
-  --bg-card: #ECEFF1;      /* Standard Fach-Hintergrund */
-  --text-card: #263238;    /* Standard Fach-Text */
+  --bg-card: #ECEFF1;      
+  --text-card: #263238;    
   --bg-dropdown: #ffffff;
   --shadow-color: rgba(0,0,0,0.1);
   --header-bg-start: #3b3b98;
   --header-bg-end: #575fcf;
-  --bg-day-header: #eef1fb; /* Hintergrund der Wochentage oben */
+  --bg-day-header: #eef1fb; 
   --text-day-header: #333;
 
   /* --- SPEZIFISCHE FÄCHER-FARBEN (LIGHT MODE) --- */
-  /* BKU (Cyan) */
   --bg-bku: #E0F7FA; --text-bku: #006064;
-  /* Sport (Grün) */
   --bg-sport: #E8F5E9; --text-sport: #1B5E20;
-  /* ABU (Orange) */
   --bg-abu: #FFF3E0; --text-abu: #E65100;
-  /* PU (Lila) */
   --bg-pu: #F3E5F5; --text-pu: #4A148C;
-  /* Mathe (Blau) */
   --bg-mathe: #E3F2FD; --text-mathe: #0D47A1;
-  /* Englisch (Rot-Orange) */
   --bg-englisch: #FBE9E7; --text-englisch: #BF360C;
-  /* Französisch (Gelb-Orange) */
   --bg-franz: #FFFDE7; --text-franz: #F57F17;
-  /* ALExA (Rot) */
   --bg-alexa: #FFEBEE; --text-alexa: #B71C1C;
 }
 
@@ -44,39 +36,30 @@ body.dark-mode {
   /* --- ALLGEMEINE FARBEN (DARK MODE) --- */
   --bg-body: #121212;
   --text-color: #e0e0e0;
-  --bg-card: #263238;       /* Dunklerer Standard-Hintergrund */
-  --text-card: #eceff1;     /* Hellerer Standard-Text */
+  --bg-card: #263238;       
+  --text-card: #eceff1;     
   --bg-dropdown: #2c2c2c;
   --shadow-color: rgba(0,0,0,0.5);
   --header-bg-start: #1a1a40;
   --header-bg-end: #2a2a60;
-  --bg-day-header: #2c2c2c; /* Dunkle Wochentage */
+  --bg-day-header: #2c2c2c; 
   --text-day-header: #e0e0e0;
 
-  /* --- SPEZIFISCHE FÄCHER-FARBEN (DARK MODE - NEU!) --- */
-  /* Wir drehen die Logik um: Dunkler Hintergrund, heller Text für Kontrast */
-  
-  /* BKU (Dunkel-Cyan BG, Helles Cyan Text) */
+  /* --- SPEZIFISCHE FÄCHER-FARBEN (DARK MODE) --- */
   --bg-bku: #004D40; --text-bku: #E0F7FA;
-  /* Sport (Dunkel-Grün BG, Helles Grün Text) */
   --bg-sport: #1B5E20; --text-sport: #E8F5E9;
-  /* ABU (Dunkel-Orange BG, Helles Orange Text) */
   --bg-abu: #BF360C; --text-abu: #FFF3E0;
-  /* PU (Dunkel-Lila BG, Helles Lila Text) */
   --bg-pu: #4A148C; --text-pu: #F3E5F5;
-  /* Mathe (Dunkel-Blau BG, Helles Blau Text) */
   --bg-mathe: #0D47A1; --text-mathe: #E3F2FD;
-  /* Englisch (Dunkel-Rot BG, Helles Rot Text) */
   --bg-englisch: #B71C1C; --text-englisch: #FBE9E7;
-  /* Französisch (Dunkel-Gelb BG, Helles Gelb Text) */
   --bg-franz: #F57F17; --text-franz: #FFFDE7;
-  /* ALExA (Tiefrot BG, Helles Rot Text) */
   --bg-alexa: #880E4F; --text-alexa: #FFEBEE;
 }
 
 /* =========================================
    2. BASIS LAYOUT
    ========================================= */
+
 body { 
   margin: 0; 
   font-family: 'Inter', sans-serif; 
@@ -100,6 +83,7 @@ header {
   text-align: center;   
   box-sizing: border-box;
   transition: background 0.3s;
+  z-index: 3000;
 }
 
 main {
@@ -112,8 +96,8 @@ main {
 }
 @media (min-width: 901px) {
   main {
-    display: flex; /* Flexbox aktivieren nur für Desktop */
-    justify-content: center; /* Horizontal zentrieren */
+    display: flex; 
+    justify-content: center; 
     align-items: flex-start; 
     padding-top: 2rem; 
   }
@@ -133,7 +117,6 @@ main {
   box-sizing: border-box;
 }
 
-/* Tage (erste Reihe) */
 .days {
   grid-column: 1 / -1; 
   display: grid;
@@ -159,9 +142,18 @@ main {
   justify-content: center;
   box-sizing: border-box;
   transition: background 0.3s, color 0.3s;
+  flex-direction: column; 
+  line-height: 1.2;
 }
 
-/* Zeitspalte */
+.days .day small {
+  display: block;       
+  margin-top: 6px;      
+  font-size: 0.85em;    
+  opacity: 0.7;         
+  font-weight: 400;     
+}
+
 .times {
   grid-column: 1 / 2;
   grid-row: 2 / 3;
@@ -184,30 +176,20 @@ main {
   font-weight: 700;        
   color: var(--text-color);
   opacity: 0.7;
-  z-index: 10;             
+  z-index: 10;     
+  border-top: none !important;        
 }
-
-/* Wir nutzen ::before für den Text-Hintergrund (Bubble-Effekt) */
-.time::before {
-  content: attr(data-time); /* Optional, falls wir Attribut hätten. Hier nur Deko. */
-  /* Da wir den Text nicht doppeln wollen, stylen wir .time selbst als Bubble wäre schwierig wegen width:100%.
-     Deshalb machen wir es schlicht und elegant nur über Text. */
-}
-
-/* Alternative: Wir lassen die Linie durch ::after laufen */
 .time::after {
   content: "";
   position: absolute;
-  right: 0; /* Startet an der rechten Kante der Zeitspalte */
-  width: 6px; /* Kleiner "Tick-Mark" Strich */
+  right: 0; 
+  width: 6px; 
   height: 1px;
   background-color: var(--text-color);
   opacity: 0.3;
+  
 }
 
-/* =========================================
-   DARK MODE ANPASSUNG FÜR ZEITEN
-   ========================================= */
 body.dark-mode .times {
   border-right: 1px solid rgba(255,255,255,0.1);
   background: linear-gradient(to right, transparent, rgba(255,255,255,0.02));
@@ -215,7 +197,6 @@ body.dark-mode .times {
 
 .special-line { display: none !important; }
 
-/* Subjects Bereich */
 .subjects {
   grid-column: 2 / -1;
   grid-row: 2 / 3;
@@ -230,7 +211,6 @@ body.dark-mode .times {
   min-width: 0;
 }
 
-/* Fach-Boxen Basis-Styling */
 .day-column .subject {
   position: absolute;
   left: 50%;
@@ -240,7 +220,6 @@ body.dark-mode .times {
 }
 
 .subject {
-  /* Standardfarben über Variablen */
   background-color: var(--bg-card);
   color: var(--text-card);
   border-radius: 12px;
@@ -252,7 +231,8 @@ body.dark-mode .times {
   justify-content: flex-start;
   overflow: hidden;
   cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.3s;
+  /* HIER ÄNDERN: box-shadow aus der Transition entfernt */
+  transition: transform 0.2s ease, background-color 0.3s;
   z-index: 1;
 }
 
@@ -261,32 +241,22 @@ body.dark-mode .times {
 .subject-time { font-size: 12px; opacity: 0.8; margin-bottom: 6px; }
 .subject-room, .subject-teacher { font-size: 12px; opacity: 0.9; }
 
-/* Vergrösserter Zustand */
 .subject.enlarged {
-  /* 1. Aus dem Grid lösen und fixieren */
   position: fixed !important;
   top: 50% !important;
   left: 50% !important;
-  transform: translate(-50%, -50%) !important; /* Exakte Mitte */
-  
-  /* 2. Grösse definieren */
-  width: 90% !important;      /* Handy: fast volle Breite */
-  max-width: 500px !important; /* Desktop: nicht breiter als 500px */
-  height: auto !important;    /* Höhe passt sich Inhalt an */
-  min-height: 250px;          /* Mindesthöhe für schöneren Look */
-  
-  /* 3. Optik & Overlay (Schatten verdunkelt den Hintergrund) */
-  z-index: 10000 !important;  /* Ganz oben liegen */
+  transform: translate(-50%, -50%) !important; 
+  width: 90% !important;      
+  max-width: 500px !important; 
+  height: auto !important;    
+  min-height: 250px;          
+  z-index: 10000 !important;  
   box-shadow: 0 0 0 100vmax rgba(0,0,0,0.6), 0 20px 50px rgba(0,0,0,0.5) !important;
-  cursor: default;            /* Zeigt an, dass es ein Info-Fenster ist */
-  
-  /* 4. Inhalt schön anordnen */
+  cursor: default;            
   display: flex;
   flex-direction: column;
-  justify-content: center;    /* Inhalt vertikal mittig im Popup */
-  padding: 30px !important;   /* Mehr Innenabstand */
-  
-  /* Optional: Animation beim Öffnen */
+  justify-content: center;    
+  padding: 30px !important;   
   animation: popupFadeIn 0.2s ease-out forwards;
 }
 
@@ -304,8 +274,6 @@ body.dark-mode .times {
 /* =========================================
    4. SPEZIFISCHE FÄCHER-FARBEN (OBERRIDES)
    ========================================= */
-/* HIER IST DIE ÄNDERUNG: Wir nutzen jetzt Variablen statt fester Hex-Codes */
-
 .subject.fach-bku { background-color: var(--bg-bku); color: var(--text-bku); }
 .subject.fach-sport { background-color: var(--bg-sport); color: var(--text-sport); }
 .subject.fach-abu { background-color: var(--bg-abu); color: var(--text-abu); }
@@ -315,7 +283,6 @@ body.dark-mode .times {
 .subject.fach-franzosisch { background-color: var(--bg-franz); color: var(--text-franz); }
 .subject.fach-alexa { background-color: var(--bg-alexa); color: var(--text-alexa); }
 
-
 /* =========================================
    5. RESPONSIVE / MOBILE
    ========================================= */
@@ -324,34 +291,24 @@ body.dark-mode .times {
 .day-tabs button.active { background: var(--header-bg-end); color: #fff; }
 
 @media (max-width: 900px) {
-  
-  /* 1. Hauptcontainer */
   main {
     display: flex;
     flex-direction: column; 
     align-items: center;
-    justify-content: flex-start; /* Startet oben */
-    
+    justify-content: flex-start;
     overflow-x: hidden;
-    padding: 10px 1rem; /* Etwas Padding oben/unten */
+    padding: 10px 1rem; 
     min-height: auto;
   }
 
-  /* 2. Wochenkontrollen */
-  .week-controls {
-    margin-top: 0;
-    margin-bottom: 10px;
-    width: 100%;
-    justify-content: center;
-  }
+  .week-controls { margin-top: 0; margin-bottom: 10px; width: 100%; justify-content: center; }
 
-  /* 3. Tabs: Jetzt unter der Woche */
   .day-tabs { 
     display: flex; 
-    justify-content: space-between; /* Buttons schön verteilen */
+    justify-content: space-between; 
     width: 100%; 
     max-width: 450px; 
-    margin: 0 auto 15px auto; /* Abstand nach unten zum Plan */
+    margin: 0 auto 15px auto; 
     gap: 5px;
     background: transparent;
     border: none;
@@ -361,23 +318,19 @@ body.dark-mode .times {
   .day-tabs button {
     background: var(--bg-card);
     border-radius: 6px;
-    padding: 8px 5px; /* Etwas grössere Klickfläche */
-    flex-grow: 1; /* Buttons nehmen verfügbaren Platz */
+    padding: 8px 5px; 
+    flex-grow: 1; 
     font-size: 13px;
     text-align: center;
   }
-  
-  .days { 
-    display: none; 
-  }
 
-  /* 4. Timetable: Das 2-Spalten Grid */
+  .days { display: none; }
+
   .timetable {
     display: grid;
-    /* Spalte 1: Zeit (50px), Spalte 2: Fach (Rest) */
     grid-template-columns: var(--time-col) 1fr;
-    grid-template-rows: 1fr; /* Nur eine Zeile, JS füllt die Höhe */
-    gap: 0; /* Kein Gap hier, damit Ausrichtung exakt ist */
+    grid-template-rows: 1fr; 
+    gap: 0; 
     width: 100%;
     max-width: 450px; 
     margin: 0 auto;
@@ -385,26 +338,17 @@ body.dark-mode .times {
     position: relative;
   }
 
-  /* 5. Linke Spalte: Zeiten */
   .times {
     display: block; 
     grid-column: 1 / 2;
     grid-row: 1 / 2;
     padding: 0;
     margin: 0;
-    /* Hintergrund leicht sichtbar machen zur Orientierung */
     border-right: 1px solid rgba(0,0,0,0.05); 
   }
   
-  .time {
-    font-size: 10px; 
-    text-align: right;
-    padding-right: 8px;
-    /* Vertikale Zentrierung der Zeit zum Strich */
-    transform: translateY(-50%);
-  }
+  .time { font-size: 10px; text-align: right; padding-right: 8px; transform: translateY(-50%); }
 
-  /* 6. Rechte Spalte: Fächer */
   .subjects {
     display: block;
     grid-column: 2 / 3;
@@ -412,46 +356,28 @@ body.dark-mode .times {
     width: 100%;
     padding: 0;
     margin: 0;
-    position: relative; /* Wichtig für absolute Positionierung der Kinder */
+    position: relative; 
   }
 
-  /* 7. Tagesspalten */
   .day-column { 
     display: none; 
-    position: absolute; /* Muss absolut sein, damit es deckungsgleich mit .subjects ist */
-    top: 0; 
-    left: 0;
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    padding: 0;
+    position: absolute; 
+    top: 0; left: 0; width: 100%; height: 100%; margin: 0; padding: 0;
   }
-  .day-column.active { 
-    display: block;
-  }
+  .day-column.active { display: block; }
   
-  /* 8. Fächerboxen */
-  .day-column .subject {
-      width: calc(100% - 10px); /* Etwas Platz rechts lassen */
-      left: 5px; /* Kleiner Abstand zur Zeitlinie */
-      transform: none; /* Reset Desktop Transform */
-  }
+  .day-column .subject { width: calc(100% - 10px); left: 5px; transform: none; }
 
-  /* Vergrössertes Fach auf Handy */
   .subject.enlarged {
-    position: fixed !important;    /* Fixiert am Bildschirm, nicht im Grid scrollen */
-    top: 50% !important;           /* Vertikal zentriert */
-    left: 50% !important;          /* Horizontal zentriert */
-    transform: translate(-50%, -50%) !important; /* Exakte Mitte */
-    
-    width: 85vw !important;        /* 85% der Bildschirmbreite */
+    position: fixed !important;    
+    top: 50% !important;           
+    left: 50% !important;          
+    transform: translate(-50%, -50%) !important; 
+    width: 85vw !important;        
     max-width: 350px;
     height: auto !important;
-    min-height: 200px;             /* Mindesthöhe damit Inhalt Platz hat */
-    
-    z-index: 9999 !important;      /* Über alles andere legen */
-    
-    /* Ein starker Schatten, der den Hintergrund abdunkelt */
+    min-height: 200px;             
+    z-index: 9999 !important;      
     box-shadow: 0 0 0 1000px rgba(0,0,0,0.7), 0 10px 30px rgba(0,0,0,0.5) !important;
   }
 }
@@ -461,225 +387,223 @@ body.dark-mode .times {
 /* =========================================
    6. NAVIGATION ELEMENTS (Zurück & Menü)
    ========================================= */
-/* Zurück-Button */
 .back-to-login {
-  position: absolute;
-  left: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: white;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  transition: background-color 0.2s ease;
+  position: absolute; left: 10px; top: 50%; transform: translateY(-50%);
+  color: white; text-decoration: none; display: inline-flex; align-items: center; justify-content: center;
+  width: 40px; height: 40px; border-radius: 50%; transition: background-color 0.2s ease;
 }
 .back-to-login:hover { background-color: rgba(255, 255, 255, 0.2); }
 .back-to-login svg { width: 28px; height: 28px; fill: white; }
 
-/* Menü & Dropdown (Rechts) */
-.menu-container {
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-}
+.menu-container { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); }
 
 #menu-btn {
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  padding: 8px;
-  display: flex;
-  align-items: center;
-  border-radius: 50%;
-  transition: background 0.2s;
+  background: transparent; border: none; cursor: pointer; padding: 8px; display: flex; align-items: center; border-radius: 50%; transition: background 0.2s;
 }
 #menu-btn:hover { background: rgba(255,255,255,0.2); }
 
+/* --- MENU DROPDOWN FIXES --- */
 .dropdown-menu {
   display: none; 
   position: absolute;
   right: 0;
   top: 50px;
   background: var(--bg-dropdown);
-  color: var(--text-color);
   box-shadow: 0 4px 12px var(--shadow-color);
   border-radius: 8px;
-  padding: 10px;
-  min-width: 150px;
+  padding: 8px;
+  min-width: 160px;
   z-index: 2000;
+  flex-direction: column;
+  gap: 4px; /* Abstand zwischen den Buttons */
 }
-.dropdown-menu.show { display: block; }
+.dropdown-menu.show { display: flex; }
 
-#dark-mode-toggle {
+.dropdown-menu button {
   background: none;
   border: none;
   color: var(--text-color);
-  font-size: 16px;
+  font-size: 15px;
+  font-family: 'Inter', sans-serif;
   cursor: pointer;
   width: 100%;
   text-align: left;
-  padding: 8px;
-  border-radius: 4px;
+  padding: 10px 12px;
+  border-radius: 6px;
+  transition: background-color 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Abstand zwischen Emoji und Text */
 }
-#dark-mode-toggle:hover { 
+.dropdown-menu button:hover { 
     background-color: var(--shadow-color);
 }
+
 @media (min-width: 901px) {
-  main {
-    /* Macht den Main-Bereich zum Flex-Container */
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Zentriert horizontal */
-    
-    /* Optional: Wenn du es auch vertikal mittig haben willst:
-       min-height: 80vh;
-       justify-content: center; 
-    */
-  }
-  
-  .timetable {
-    /* Sicherstellen, dass der Plan nicht breiter als erlaubt wird */
-    width: 100%; 
-    margin: 0 auto;
-  }
+  main { display: flex; flex-direction: column; align-items: center; }
+  .timetable { width: 100%; margin: 0 auto; }
 }
+
 /* =========================================
    WOCHEN-NAVIGATION
    ========================================= */
-   
-.week-controls {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 10px 0;
-  margin-bottom: 15px;
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: var(--text-color);
-}
+.week-controls { display: flex; justify-content: center; align-items: center; padding: 10px 0; margin-bottom: 15px; font-size: 1.1rem; font-weight: 600; color: var(--text-color); }
+.week-controls button { background: none; border: none; cursor: pointer; color: var(--header-bg-start); padding: 5px 10px; transition: color 0.2s; display: flex; }
+.week-controls button:hover { color: #3b3b98; }
+#week-range { margin: 0 15px; text-align: center; min-width: 130px; }
+body.dark-mode .week-controls button { color: #9fa4e2; }
+body.dark-mode .week-controls button:hover { color: #c9cce5; }
+.week-display { font-size: 1.1rem; font-weight: 600; color: var(--text-color); min-width: 200px; text-align: center; }
+.day-tabs button span.date-small { display: block; font-size: 0.75em; opacity: 0.8; font-weight: 400; }
 
-.week-controls button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: var(--header-bg-start); /* Blaue Farbe verwenden */
-    padding: 5px 10px;
-    transition: color 0.2s;
-    display: flex; /* Zentriert das SVG */
-}
-
-.week-controls button:hover {
-    color: #3b3b98; /* Dunklere Farbe beim Hovern */
-}
-
-#week-range {
-    margin: 0 15px;
-    text-align: center;
-    min-width: 130px; /* Stellt sicher, dass das Datum Platz hat */
-}
-
-/* Dark Mode Anpassung */
-body.dark-mode .week-controls button {
-    color: #9fa4e2; /* Hellere Farbe für Dark Mode */
-}
-body.dark-mode .week-controls button:hover {
-    color: #c9cce5;
-}
-
-.week-display {
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: var(--text-color);
-  min-width: 200px; /* Verhindert Springen beim Textwechsel */
-  text-align: center;
-}
-
-/* Aktualisierung für Tab-Namen auf Handy */
-.day-tabs button span.date-small {
-  display: block;
-  font-size: 0.75em;
-  opacity: 0.8;
-  font-weight: 400;
-}
-.days .day {
-  /* Erlaubt uns, die Flex-Richtung zu steuern, falls nötig */
-  flex-direction: column; 
-  line-height: 1.2; /* Zeilenabstand im Titel normalisieren */
-}
-
-/* Das Datum (wird als <small> im JS eingefügt) */
-.days .day small {
-  display: block;       /* Macht es zur eigenen Zeile */
-  margin-top: 6px;      /* Hier ist der Abstand, den du wolltest */
-  font-size: 0.85em;    /* Schriftgrösse */
-  opacity: 0.7;         /* Etwas blasser für die Hierarchie */
-  font-weight: 400;     /* Dünnere Schrift */
-}
 /* =========================================
-   3. MARKIERUNG AKTIVER TAG (FINALE KORREKTUR)
+   MARKIERUNG AKTIVER TAG
    ========================================= */
-
-/* NEU: Styling für den HEUTIGEN Tag (ROTE Markierung) */
-
-.day-tabs button.is-today {
-  background-color: #ff000070 !important; 
-  color: var(--text-color) !important; 
-  font-weight: 700;
-  box-shadow: none !important; 
-  transform: translateY(0) !important; 
-  border-radius: 10px !important;
+.day-tabs button.is-today { 
+    background-color: #b71c1c !important; /* Sattes Rot für inaktiv */
+    color: white !important; 
+    font-weight: 700; 
+    box-shadow: none !important; 
+    transform: translateY(0) !important; 
+    border-radius: 10px !important; 
 }
-
-/* Dark Mode Anpassung für HEUTE */
-body.dark-mode .days .day.is-today,
-body.dark-mode .days .day.active-day.is-today {
-    background-color: #ff0000b8 !important;
-    color: var(--bg-body) !important;
-    box-shadow: none !important;
+body.dark-mode .days .day.is-today, 
+body.dark-mode .days .day.active-day.is-today { 
+    background-color: #b71c1c !important; 
+    color: var(--bg-body) !important; 
+    box-shadow: none !important; 
 }
-
-.days .day.active-day.is-today {
-  background-color: #F49890 !important; /* Rot gewinnt immer */
-  color: var(--text-color) !important;
+.days .day.active-day.is-today { 
+  background-color: #b71c1c !important; 
+  color: white !important; 
 }
-
-/* Selection-Markierung im Desktop-Header */
-.days .day.active-day {
+.days .day.active-day { 
   background-color: var(--bg-day-header); 
-  color: var(--text-day-header);
-  font-weight: 600;
-  box-shadow: 0 1px 3px rgba(0,0,0,.05);
+  color: var(--text-day-header); 
+  font-weight: 600; 
+  box-shadow: 0 1px 3px rgba(0,0,0,.05); 
 }
-/* Selection-Markierung für den Mobilen Tab */
-.day-tabs button.active {
-  background: var(--bg-body) !important;
+.day-tabs button.active { 
+  background: var(--bg-body) !important; 
   color: var(--header-bg-start) !important; 
-  font-weight: 700;
-  box-shadow: 0 1px 3px rgba(0,0,0,.1) !important;
-  transform: translateY(0) !important;
+  font-weight: 700; 
+  box-shadow: 0 1px 3px rgba(0,0,0,.1) !important; 
+  transform: translateY(0) !important; 
+}
+.day-tabs button.active.is-today { 
+  background-color: #d32f2f !important; /* Dunkelrot */
+  color: white !important; 
+  font-weight: 700; 
+}
+body.dark-mode .day-tabs button.active.is-today { 
+  background-color: #b71c1c !important; 
+  color: white !important; 
 }
 
-/* WICHTIG: Wenn ein Tab beides ist (Selected UND Today), soll ROT gewinnen */
-.day-tabs button.active.is-today {
-    background-color: #F49890 !important; 
-    color: var(--text-color) !important;
-    font-weight: 700;
-}
-body.dark-mode .day-tabs button.active.is-today {
-    background-color: #D32F2F !important;
-    color: var(--bg-body) !important;
-}
 
-/* FIX 1: Lesbarkeit des aktiven Tabs im Dark Mode */
+
+
 @media (max-width: 900px) {
-  body.dark-mode .day-tabs button.active {
-    background-color: var(--bg-card) !important; /* Hellerer Hintergrund als Body */
-    color: #ffffff !important;                   /* Weisse Schrift statt Dunkelblau */
-    border: 1px solid var(--header-bg-end);      /* Optional: Rand zur Hervorhebung */
-  }
+  body.dark-mode .day-tabs button.active { background-color: var(--bg-card) !important; color: #ffffff !important; border: 1px solid var(--header-bg-end); }
+}
+
+/* =========================================
+   7. DRUCK-ANSICHT (FIXED & EXPANDED)
+   ========================================= */
+@media print {
+    /* Setzt das Papier-Format auf A4 Querformat und nutzt Ränder besser aus */
+    @page {
+        size: A4 landscape;
+        margin: 2.5mm;
+    }
+
+    :root, body, body.dark-mode {
+       --bg-body: #ffffff !important;
+       --text-color: #000000 !important;
+       --bg-card: #ffffff !important;      
+       --text-card: #000000 !important;
+       --header-bg-start: #ffffff !important;
+       --header-bg-end: #ffffff !important;
+       --bg-day-header: #f0f0f0 !important; 
+       --text-day-header: #000000 !important;
+       --shadow-color: transparent !important; 
+    }
+  
+    * {
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+  
+    header .menu-container,
+    header .back-to-login,
+    .week-controls,
+    .day-tabs,             
+    #dropdown-menu,
+    .subject.enlarged,
+    .back-to-login
+    { display: none !important; }
+  
+    body { background: white !important; margin: 0 !important; padding: 0 !important; width: 100% !important; }
+    main { padding: 0 !important; margin: 0 !important; display: block !important; width: 100% !important; }
+  
+    header {
+      position: static !important; 
+      background: none !important;
+      color: black !important;
+      box-shadow: none !important;
+      border-bottom: 2px solid #000;
+      margin-bottom: 10px; /* ÄNDERUNG: Von 20px auf 10px verkleinert */
+      display: block !important;
+      padding: 5px 0 !important; /* ÄNDERUNG: Von 10px auf 5px verkleinert */
+    }
+  
+    .timetable {
+      display: grid !important;
+      grid-template-columns: 50px 1fr 1fr 1fr 1fr 1fr !important; 
+      grid-template-rows: auto auto !important; 
+      width: 100% !important;
+      max-width: 100% !important; /* Entfernt die Breiten-Begrenzung */
+      margin: 0 !important;
+      border: none !important;
+      page-break-inside: avoid;
+    }
+  
+    /* Zwingt ALLE Tage dazu, gedruckt zu werden, auch wenn über Handy gestartet */
+    .days { display: contents !important; }
+    .day-column { 
+        display: block !important; 
+        grid-row: 2 !important;
+        position: relative !important;
+        border-right: 1px solid #eee; 
+        height: auto !important; 
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+  
+    .days .day {
+      grid-row: 1 !important;
+      background: #eee !important;
+      color: black !important;
+      border-bottom: 1px solid #000;
+      font-weight: bold;
+      text-align: center;
+      padding: 5px;
+    }
+    
+    .days .day.placeholder { grid-column: 1 !important; border: none !important; background: transparent !important; }
+    .times { grid-column: 1 !important; grid-row: 2 !important; display: block !important; border-right: 1px solid #ccc; }
+    .times .time { border-top-color: transparent !important; border: none !important; color: #000 !important; }
+  
+    .subjects { display: contents !important; }
+  
+    .subject {
+      box-shadow: none !important;
+      border: 1px solid #999 !important; 
+      color: black !important; 
+    }
+    
+    body.dark-mode .subject { background-color: #fff !important; color: #000 !important; }
+    
+    .subject-title { font-weight: bold; font-size: 11pt; }
+    .subject-time, .subject-room, .subject-teacher { font-size: 9pt; }
 }
